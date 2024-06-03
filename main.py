@@ -3,6 +3,7 @@ import settings
 
 import pygame as pg
 import random
+import pygame.freetype
 import songs
 pg.init()
 pg.mixer.init()
@@ -15,12 +16,22 @@ class Game():
         self.milisekund = pg.time.get_ticks()
         self.timeprezaryad = -1000
         self.watch = pg.time.Clock()
+        self.k = 0
+        self.str = pygame.freetype.Font(None, 16)
+        self.end = 0
 
     def drawall(self):
         self.window.fill([250, 250, 250])
-        for i in range(1, settings.STOLBS):
-            pg.draw.line(self.window, [0,0,0],[settings.STOLBSW*i,settings.SIZE[1]],[settings.STOLBSW*i,0])
-        self.song.draw(self.window)
+        if self.end == 0:
+            for i in range(1, settings.STOLBS):
+                pg.draw.line(self.window, [0,0,0],[settings.STOLBSW*i,settings.SIZE[1]],[settings.STOLBSW*i,0])
+            self.song.draw(self.window)
+        else:
+            text = self.str.render("GAME OVER")
+            text[1].center = [settings.SIZE[0]//2,settings.SIZE[1]//2]
+            self.window.blit(text[0], text[1])
+
+
 
     def upravlenieall(self):
         self.milisekund = pg.time.get_ticks()
@@ -36,6 +47,16 @@ class Game():
         for event in eventall:
             if event.type == pg.QUIT:
                 self.x = False
+            if event.type == pg.MOUSEBUTTONDOWN:
+                for i in self.song.nots:
+                    if i.square.collidepoint(event.pos):
+                        i.clik()
+                        if i.index != self.k:
+                            print(i.index,self.k)
+                            self.end = 1
+                            break
+                        self.k += 1
+
 
 
     def gameall(self):

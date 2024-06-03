@@ -11,7 +11,7 @@ class Songs():
 
     def create(self):
         x = settings.STOLBSW*random.randint(0,settings.STOLBS)
-        i = nots.Note([x, 0],self.name[self.chit],self.time[self.chit])
+        i = nots.Note([x, 0],self.name[self.chit],self.time[self.chit],self.chit)
         self.nots.append(i)
         self.chit += 1
 

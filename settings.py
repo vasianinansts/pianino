@@ -21,3 +21,4 @@ MORNING_DURATION = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 STOLBS = 4
 STOLBSW = SIZE[0] // STOLBS
+
